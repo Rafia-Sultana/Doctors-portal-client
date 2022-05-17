@@ -10,6 +10,7 @@ copyAndPaste this in index.css)
 4.npm i daisyui
 (change plugins in tailwing.config.js )
 import browserrouter
+5.npm install react-day-picker date-fns
 
 
 
