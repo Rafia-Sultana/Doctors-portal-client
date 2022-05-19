@@ -11,6 +11,9 @@ copyAndPaste this in index.css)
 (change plugins in tailwing.config.js )
 import browserrouter
 5.npm install react-day-picker date-fns
+6.npm install firebase
+7.npm install --save react-firebase-hooks
+8.create .env.local
 
 
 
