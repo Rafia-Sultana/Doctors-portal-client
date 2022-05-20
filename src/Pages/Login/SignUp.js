@@ -1,40 +1,66 @@
 import React from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import Loading from '../Home/Shared/Loading';
-import { Link } from 'react-router-dom';
-
-const Login = () => {
+import { Link, useNavigate } from 'react-router-dom';
+const SignUp = () => {
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [
-        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth);
-
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+    const navigate = useNavigate();
     let signInError;
-    if (loading || googleLoading) {
+    if (loading || googleLoading || updating) {
         return <Loading></Loading>
     }
-    if (error || googleError) {
-        signInError = <p className='text-red-500'><small>{error?.message || googleError?.message}</small></p>
+    if (error || googleError || updateError) {
+        signInError = <p className='text-red-500'><small>{error?.message || googleError?.message || updateError?.message}</small></p>
     }
     if (user || googleUser) {
         console.log(user || googleUser)
     }
-    const onSubmit = data => {
+    const onSubmit = async data => {
         console.log(data);
-        signInWithEmailAndPassword(data.email, data.password)
+        await createUserWithEmailAndPassword(data.email, data.password)
+        await updateProfile({ displayName: data.name })
+        console.log('update done')
+        navigate('/appointment');
     };
     return (
         <div className="flex h-screen justify-center items-center">
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h2 className="text-center text-xl font-bold">Login</h2>
+                    <h2 className="text-center text-xl font-bold">SignUp</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label">
+                                <span class="label-text">Name</span>
+
+                            </label>
+                            <input
+                                type="name"
+                                placeholder="Your Name"
+                                class="input input-bordered w-full max-w-xs"
+                                {...register("name", {
+
+                                    required: {
+                                        value: true,
+                                        message: 'Name is required'
+                                    },
+
+                                })}
+                            />
+                            <label class="label">
+                                {errors.name?.type === 'required' && <span class="label-text-alt text-red-500">{errors.name.message}</span>}
+
+                            </label>
+                        </div>
                         <div class="form-control w-full max-w-xs">
                             <label class="label">
                                 <span class="label-text">Email</span>
@@ -88,9 +114,9 @@ const Login = () => {
                             </label>
                         </div>
                         {signInError}
-                        <input className='btn w-full max-w-xs' type="submit" value="login" />
+                        <input className='btn w-full max-w-xs' type="submit" value="Signup" />
                     </form>
-                    <p className='text-center'><small>New to doctors portal? <Link className='text-secondary' to="/signup" >Create New Account</Link></small></p>
+                    <p className='text-center'><small>Already have an account? <Link className='text-secondary' to="/login">Please login!</Link></small></p>
                     <div className="divider">OR</div>
 
                     <div className="card-actions justify-center">
@@ -103,4 +129,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
