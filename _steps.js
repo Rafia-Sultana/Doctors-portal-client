@@ -14,6 +14,7 @@ import browserrouter
 6.npm install firebase
 7.npm install --save react-firebase-hooks
 8.create .env.local
+9.npm install react-hook-form
 
 
 
