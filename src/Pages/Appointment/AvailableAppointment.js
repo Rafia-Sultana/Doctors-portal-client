@@ -9,6 +9,7 @@ import BookingModal2 from './BookingModal2';
 const AvailableAppointment = ({ date }) => {
     const [services, setServices] = useState([]);
     const [treatment, setTreatment] = useState(null);
+    const formattedDate = format(date, 'PP');
     useEffect(() => {
         fetch('http://localhost:5000/service')
             .then(res => res.json())
@@ -28,9 +29,11 @@ const AvailableAppointment = ({ date }) => {
                 }
             </div>
             {treatment && <BookingModal2
-                setTreatment={setTreatment}
-                treatment={treatment}
                 date={date}
+                treatment={treatment}
+                setTreatment={setTreatment}
+
+
             ></BookingModal2>}
 
         </div>

@@ -15,6 +15,7 @@ import browserrouter
 7.npm install --save react-firebase-hooks
 8.create .env.local
 9.npm install react-hook-form
+10.npm install --save react toastify
 
 
 
