@@ -1,24 +1,25 @@
 import React from 'react';
+import chair from '../../assets/images/chair.png';
+import bg from '../../assets/images/bg.png';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import chair from '../../assets/images/chair.png'
-import bgChair from '../../assets/images/bg.png'
+import { useQuery } from 'react-query';
+
 const AppointmentBanner = ({ date, setDate }) => {
 
     return (
         <div style={{
-            background: `url(${bgChair})`,
+            background: `url(${bg})`,
             backgroundSize: 'cover'
         }} className="hero min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">
-                <img src={chair} alt="" className="max-w-sm rounded-lg shadow-2xl ml-10" />
+                <img src={chair} className="max-w-sm rounded-lg shadow-2xl" alt='Dentist Chair' />
                 <div>
                     <DayPicker
                         mode="single"
                         selected={date}
                         onSelect={setDate}
                     />
-
                 </div>
             </div>
 

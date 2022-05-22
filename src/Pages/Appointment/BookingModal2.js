@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const BookingModal2 = ({ setTreatment, date, treatment }) => {
+const BookingModal2 = ({ setTreatment, date, treatment, refetch }) => {
   const { _id, name, slots } = treatment;
   const [user, loading, error] = useAuthState(auth);
   const formattedDate = format(date, 'pp')
